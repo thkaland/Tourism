@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://finalInvocation.tps" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://www.webserviceX.NET" xmlns:wsdl1="http://parsing" xmlns:wsdl2="http://webservices.cloanto.com/currencyserver/" name="finalInvocation" targetNamespace="http://finalInvocation.tps">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="countryPLT">
+    <plnk:role name="countryPLR" portType="wsdl:countrySoap"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="countryCodePLT">
+    <plnk:role name="countryCodePLR" portType="wsdl1:ExtractCode"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="currencyPLT">
+    <plnk:role name="currencyPLR" portType="wsdl2:CurrencyServerSoap"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="currencyExchangePLT">
+    <plnk:role name="currencyExchangePLR" portType="wsdl2:CurrencyServerSoap"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="weatherPLT">
+    <plnk:role name="weatherPLR" portType="wsdl:GlobalWeatherSoap"/>
+  </plnk:partnerLinkType>
+    <import location="country.wsdl" namespace="http://www.webserviceX.NET"/>
+    <import location="countryCode.wsdl" namespace="http://parsing"/>
+    <import location="currency.wsdl" namespace="http://webservices.cloanto.com/currencyserver/"/>
+    <import location="weather.wsdl" namespace="http://www.webserviceX.NET"/>
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://finalInvocation.tps">
+
+            <element name="finalInvocationRequest">
+                <complexType>
+                    <sequence>
+                    	<element name="fromCountry" type="string"/>
+                    	<element name="toCountry" type="string"/>
+                    	<element name="capital" type="double"/>
+                    	<element name="toCity" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="finalInvocationResponse">
+                <complexType>
+                    <sequence>
+                    	<element name="currencyExchange" type="double"/>
+                    	<element name="weather" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="finalInvocationRequestMessage">
+        <part element="tns:finalInvocationRequest" name="payload"/>
+    </message>
+    <message name="finalInvocationResponseMessage">
+        <part element="tns:finalInvocationResponse" name="payload"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the finalInvocation BPEL process -->
+    <portType name="finalInvocation">
+        <operation name="process">
+            <input message="tns:finalInvocationRequestMessage"/>
+            <output message="tns:finalInvocationResponseMessage"/>
+        </operation>
+    </portType>   
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="finalInvocation">
+        <plnk:role name="finalInvocationProvider" portType="tns:finalInvocation"/>
+    </plnk:partnerLinkType>
+    
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="finalInvocationBinding" type="tns:finalInvocation">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    	<operation name="process">
+    		<soap:operation soapAction="http://finalInvocation.tps/process"/>
+    		<input>
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+    			<soap:body use="literal"/>
+    		</output>
+    	</operation>
+    </binding>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="finalInvocationService">
+    	<port binding="tns:finalInvocationBinding" name="finalInvocationPort">
+    		<soap:address location="http://localhost:8080/ode/processes/finalInvocation"/>
+    	</port>
+    </service>
+</definitions>

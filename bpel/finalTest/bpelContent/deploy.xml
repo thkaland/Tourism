@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:currencyserver="http://webservices.cloanto.com/currencyserver/" xmlns:finalInvocation.tps="http://finalInvocation.tps" xmlns:parsing="http://parsing" xmlns:www.webserviceX.NET="http://www.webserviceX.NET">
+  <process name="finalInvocation.tps:finalInvocation">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="finalInvocation.tps:finalInvocationService" port="finalInvocationPort"/>
+    </provide>
+    <invoke partnerLink="countryPL">
+      <service name="www.webserviceX.NET:country" port="countrySoap"/>
+    </invoke>
+    <invoke partnerLink="countryCodePL">
+      <service name="parsing:ExtractCodeService" port="ExtractCode"/>
+    </invoke>
+    <invoke partnerLink="currencyPL">
+      <service name="currencyserver:CurrencyServer" port="CurrencyServerSoap"/>
+    </invoke>
+    <invoke partnerLink="currencyExchangePL">
+      <service name="currencyserver:CurrencyServer" port="CurrencyServerSoap"/>
+    </invoke>
+    <invoke partnerLink="weatherPL">
+      <service name="www.webserviceX.NET:GlobalWeather" port="GlobalWeatherSoap"/>
+    </invoke>
+  </process>
+</deploy>

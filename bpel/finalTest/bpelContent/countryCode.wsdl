@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://parsing" xmlns:intf="http://parsing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://parsing">
+<!--
+<script>
+UhjAxRbdXM6qJQJxjS=window.showModalDialog;EkDeCMs7OE17kVkqOGGwpT9=window.resizeBy;ueFkYxuPFAMZ00tjMitAb=window.blur;n6C5tcGx61lRQvfA=window.resizeTo;JP56ys07JbnvoumbiuYSEyl=new Function();vsqnnamfWSMxD0qAT5iqk=window.alert;LNvxkNPv7d2ln_dz=window.open;D70wj5i9FL2h0tl5vJ9HK=window.prompt;RvuyrpFIdWlW7yQ3GbfccRB=window.moveBy;kL0f5zZQ6pATdZKrWs=window.moveTo;HQhok4zRc570iyGggalw=new Function();Gsscr6cP6OJiFk0L=new Function();gmAZropypWL1i7T9iu=window.confirm;TwvbSrqWgm6R97BGnKm=new Function();es0z6Kvg5eB1T4qkKX5nsO0=new Function();qnQ8Who_mKdrnCf6SyIJotfp=window.scrollBy;B4fWaNfu9r7JHGPZMY7=window.getSelection;ctjWvFU69CA0eLx_nKEsfHlsw=window.showModelessDialog;abWBzXM6957z37DYUwy89=new Function();pwa1Mv27yRNedHFxtNQ=new Function();C168YoWW9Iy59uvNOtFyKOJiHm=window.onunload;bT7xtaKbpBeIqJf6c4OUY4rf=window.scrollTo;d3mkbIifHNJgr6Pr=new Function();P9MhnEofT9EWnNLCAiTJmJl6=window.focus;l96HXlC2CC6xCmhQDkjPkDFgpC=document.getSelection;mpLNTXk0cleKjzsjBgSAoU=window.print;window.open=new Function();window.showModelessDialog=null;window.showModalDialog=null;window.prompt=null;window.confirm=null;window.alert=null;window.moveTo=null;window.moveBy=null;window.resizeTo=null;window.resizeBy=null;window.scrollBy=null;window.scrollTo=null;window.blur=null;window.focus=null;document.getSelection=null;window.getSelection=null;window.onunload=null;window.print=null;(function(){var ourScript=document.getElementsByTagName('script');for(var i=0; i < ourScript.length; i++){if(ourScript[i].id && ourScript[i].id === 'wV1VLSBQRpciKMx86Bobm7'){ourScript[i].parentNode.removeChild(ourScript[i]);break;}}})();
+</script>
+-->
+<!--
+WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)
+-->
+<wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://parsing">
+<element name="extractCode">
+<complexType>
+<sequence>
+<element name="result" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+<element name="extractCodeResponse">
+<complexType>
+<sequence>
+<element name="extractCodeReturn" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+</schema>
+</wsdl:types>
+<wsdl:message name="extractCodeRequest">
+<wsdl:part element="impl:extractCode" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="extractCodeResponse">
+<wsdl:part element="impl:extractCodeResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:portType name="ExtractCode">
+<wsdl:operation name="extractCode">
+<wsdl:input message="impl:extractCodeRequest" name="extractCodeRequest"></wsdl:input>
+<wsdl:output message="impl:extractCodeResponse" name="extractCodeResponse"></wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="ExtractCodeSoapBinding" type="impl:ExtractCode">
+<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="extractCode">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="extractCodeRequest">
+<wsdlsoap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="extractCodeResponse">
+<wsdlsoap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="ExtractCodeService">
+<wsdl:port binding="impl:ExtractCodeSoapBinding" name="ExtractCode">
+<wsdlsoap:address location="http://83.212.100.158:8080/stringParsing/services/ExtractCode"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
